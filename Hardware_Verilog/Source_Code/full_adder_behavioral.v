@@ -1,14 +1,5 @@
 `timescale 1ns / 1ps
-
-// ==============================================================
-// Full Adder Implementations using Dataflow and Behavioral Modeling
-// ==============================================================
-// This file demonstrates the modern ways to design digital logic 
-// using Verilog syntax: 'assign', 'if-else', and 'case' statements.
-
-// -------------------------------------------------------------
 // Method 1: Dataflow modeling using 'assign'
-// -------------------------------------------------------------
 // This is the most common modern way to write combinational logic.
 module full_adder_assign (
     input  wire a, b, cin,
@@ -19,10 +10,7 @@ module full_adder_assign (
     assign {cout, sum} = a + b + cin;
 endmodule
 
-
-// -------------------------------------------------------------
 // Method 2: Behavioral modeling using 'if-else'
-// -------------------------------------------------------------
 // This uses sequential-style blocks (always @) to define logic.
 module full_adder_ifelse (
     input  wire a, b, cin,
@@ -42,11 +30,8 @@ module full_adder_ifelse (
     end
 endmodule
 
-
-// -------------------------------------------------------------
 // Method 3: Behavioral modeling using 'case' statements
-// -------------------------------------------------------------
-// Case statements are excellent for defining Truth Tables directly in hardware.
+// Case statements for defining Truth Tables directly in hardware.
 module full_adder_case (
     input  wire a, b, cin,
     output reg  sum, cout
