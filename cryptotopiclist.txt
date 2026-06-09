@@ -1,0 +1,594 @@
+Topic 1 — Digital Design & VLSI Fundamentals (Prerequisite)
+* Subtopic 1.1 — Digital Logic Fundamentals
+   * Boolean Algebra
+   * Logic Gates (AND, OR, XOR, NOT, NAND, NOR)
+   * Combinational vs Sequential Logic
+   * Karnaugh Maps (K-Maps)
+   * Multiplexers, Demultiplexers, Encoders, Decoders
+* Subtopic 1.2 — Sequential Logic
+   * Latches
+   * Flip-Flops (D, JK, T, SR)
+   * Registers
+   * Counters
+   * Shift Registers
+* Subtopic 1.3 — Finite State Machines (FSM)
+   * Moore Machines
+   * Mealy Machines
+   * State Encoding
+   * FSM Design Methodology
+   * RTL FSM Implementation
+* Subtopic 1.4 — Pipelining Concepts
+   * Pipeline Stages
+   * Throughput vs Latency
+   * Pipeline Hazards
+   * Deep vs Shallow Pipelines
+* Subtopic 1.5 — VLSI Design Concepts
+   * ASIC vs FPGA
+   * Standard Cell Design
+   * RTL Design Flow
+   * Area, Power, Performance Tradeoffs
+* Subtopic 1.6 — Timing Fundamentals
+   * Clocking
+   * Setup Time
+   * Hold Time
+   * Clock Skew
+   * Propagation Delay
+   * Critical Path Analysis
+
+Topic 2 — Cryptography Fundamentals & Security Architecture
+* Subtopic 2.1 — Definition & Core Objectives
+   * Definition: Plaintext → Encryption → Ciphertext → Decryption → Plaintext
+   * Security Goals:
+      * Confidentiality: unauthorized persons cannot read
+      * Integrity: data not altered in transit
+      * Authentication: proves identity of sender/receiver
+      * Non-Repudiation: a party cannot deny sending a message or their signature
+      * Availability (CIAA Model): Redundancy & Recovery
+* Subtopic 2.2 — Software vs Hardware Cryptography
+   * Software Cryptography: CPU performs all operations, flexible, easier to update, slower.
+   * Hardware Cryptography: Dedicated crypto accelerator, FPGA/ASIC implementation, lower latency, higher throughput.
+   * Hardware Acceleration Examples: CPU → General Computing, GPU → Graphics, TPU/NPU → AI, Crypto Accelerator → Cryptography.
+* Subtopic 2.3 — Security Services Mapping
+   * Confidentiality → Encryption
+   * Integrity → Hashing
+   * Authentication → Signatures
+   * Non-Repudiation → Digital Signatures
+   * Availability → Redundancy & Recovery
+
+Topic 3 — Core Cryptographic Algorithms
+* Subtopic 3.1 — Symmetric Cryptography
+   * Core Concepts: Same key used for encryption and decryption. Fast, hardware-friendly.
+   * Core challenge: securely sharing the key over an unsecured channel
+   * Algorithms: DES (56-bit), 3DES (192/256-bit), AES (128/192/256-bit)
+   * Modes of Operation: ECB, CBC, CTR, GCM, CCM
+   * AES Architecture: SubBytes, ShiftRows, MixColumns, AddRoundKey
+   * Quantum Perspective: AES-256 remains quantum resistant
+* Subtopic 3.2 — Asymmetric Cryptography
+   * Concepts: Public Key, Private Key
+   * Applications: Key Exchange, Authentication, Signatures
+   * Algorithms: RSA, Diffie-Hellman, ECC
+   * Confidentiality: encrypting with receiver's public key → only receiver can decrypt
+* Subtopic 3.3 — Elliptic Curve Cryptography (ECC)
+   * Mathematical Foundation: Elliptic Curves over Finite Fields, Point Addition, Point Doubling, Scalar Multiplication
+   * Protocols: ECDH, ECDSA
+   * Popular Curves: Curve25519, Ed25519, NIST P-256
+   * Why ECC?: Smaller Keys, Faster than RSA, Lower Power Consumption (e.g., 256-bit ECC ≈ 3072-bit RSA)
+* Subtopic 3.4 — Modular Arithmetic Fundamentals
+   * Modulo operation
+   * Modular addition
+   * Modular subtraction
+   * Modular multiplication
+   * Modular inverse
+   * Fast exponentiation
+* Subtopic 3.5 — RSA Algorithm (Full Math)
+   * Mathematical Foundation: Prime Numbers, Modular Arithmetic, Euler's Totient Function
+   * Key Generation:
+      * Choose two large random primes: p and q
+      * Compute Modulus: n = p × q
+      * Compute Euler's totient: $\phi(n) = (p−1) \times (q−1)$
+      * Choose public exponent e such that $\gcd(e, \phi(n)) = 1$; commonly e = 65537
+      * Compute private key d such that $de \equiv 1 \mod \phi(n)$ using the Extended Euclidean Algorithm.
+   * Encryption: $c = m^e \mod n$
+   * Decryption: $m = c^d \mod n$
+* Subtopic 3.6 — Hash Functions & Message Authentication
+   * Cryptographic Hashing: SHA-1 (Historical), SHA-2 Family (SHA-256, SHA-512), SHA-3
+   * Properties: Deterministic, Avalanche Effect, Collision Resistance, Preimage Resistance
+   * Message Authentication: HMAC, Keyed Hashing
+* Subtopic 3.7 — Digital Signatures
+   * Workflow: Message → Hash → Sign using Private Key → Signature
+   * Verification: Message → Hash → Verify with Public Key
+   * Algorithms: RSA Signatures, ECDSA, EdDSA
+   * Applications: Firmware Updates, Secure Boot, TLS Certificates, Software Signing
+   * Clear separation: Encryption = Confidentiality | Digital Signatures = Authentication + Integrity
+* Subtopic 3.8 — Data States
+   * Data at Rest: Disk, Database, Flash Memory
+   * Data in Transit: Network Traffic, TLS
+   * Data in Use: RAM, CPU Registers
+   * Plaintext vs Ciphertext
+* Subtopic 3.9 — Modern Security Architecture
+   * Combining: Encryption, Hashing, Digital Signatures, Authentication Protocols
+   * To provide: Confidentiality, Integrity, Authentication, Non-Repudiation
+* Subtopic 3.10 — Key Exchange Protocols
+   * Diffie-Hellman Flow
+      Alice picks a
+              ↓
+      A = g^a mod p
+
+      Bob picks b
+              ↓
+      B = g^b mod p
+
+      Exchange A and B
+
+      Alice computes:
+      B^a mod p
+
+      Bob computes:
+      A^b mod p
+
+      Shared Secret
+   * Foundational for: TLS, VPNs, SSH, PKI
+* Subtopic 3.11 — Algorithm Internal Dataflow & Scratch Implementations
+   * DES Internal Flow
+      * DES Encryption Pipeline
+         64-bit Plaintext
+                 │
+                 ▼
+         Initial Permutation (IP)
+                 │
+                 ▼
+         Split Into
+         L0 (32 bits) | R0 (32 bits)
+                 │
+                 ▼
+         Round 1
+         L1 = R0
+         R1 = L0 XOR F(R0,K1)
+                 │
+                 ▼
+         Round 2
+         L2 = R1
+         R2 = L1 XOR F(R1,K2)
+                 │
+                 ▼
+         ...
+                 │
+                 ▼
+         Round 16
+                 │
+                 ▼
+         Swap Halves
+                 │
+                 ▼
+         Final Permutation (FP)
+                 │
+                 ▼
+         64-bit Ciphertext
+      * DES Round Function
+         32-bit Right Half
+                 │
+                 ▼
+         Expansion E
+         32 → 48 bits
+                 │
+                 ▼
+         XOR Round Key
+                 │
+                 ▼
+         S-Boxes
+         48 → 32 bits
+                 │
+                 ▼
+         Permutation P
+                 │
+                 ▼
+         Output
+      * DES Key Schedule
+         56-bit Key
+               ↓
+         PC-1
+               ↓
+         Left Shift
+               ↓
+         PC-2
+               ↓
+         Round Key
+      * FPGA Blocks
+         Input Register
+               │
+         Expansion Unit
+               │
+         Key XOR Unit
+               │
+         S-Box ROMs
+               │
+         Permutation Network
+               │
+         Output Register
+   * AES Internal Flow
+      * AES Encryption Pipeline
+         128-bit Plaintext
+                 │
+                 ▼
+         AddRoundKey
+                 │
+                 ▼
+         Round 1
+          ├─ SubBytes
+          ├─ ShiftRows
+          ├─ MixColumns
+          └─ AddRoundKey
+                 │
+                 ▼
+         Round 2
+                 │
+                 ▼
+         ...
+                 │
+                 ▼
+         Round 10
+          ├─ SubBytes
+          ├─ ShiftRows
+          └─ AddRoundKey
+                 │
+                 ▼
+         Ciphertext
+         (Note: 10 Rounds for AES-128; 12 for AES-192; 14 for AES-256)
+      * AES State Matrix
+         16 Bytes
+         |00|01|02|03|
+         |04|05|06|07|
+         |08|09|10|11|
+         |12|13|14|15|
+      * AES Round Logic
+         State
+           │
+           ▼
+         SubBytes
+           │
+           ▼
+         ShiftRows
+           │
+           ▼
+         MixColumns
+           │
+           ▼
+         AddRoundKey
+           │
+           ▼
+         Next Round
+      * AES Key Expansion
+         Master Key
+               ↓
+         RotWord
+               ↓
+         SubWord
+               ↓
+         Rcon
+               ↓
+         Round Keys
+      * FPGA Architecture
+         Input Buffer
+               │
+         SubBytes Module
+               │
+         ShiftRows Module
+               │
+         MixColumns Module
+               │
+         Round Key Generator
+               │
+         Output Buffer
+   * RSA Internal Flow
+      * RSA Key Generation
+         Choose p,q
+               │
+               ▼
+         n = p × q
+               │
+               ▼
+         φ(n)
+               │
+               ▼
+         Choose e
+               │
+               ▼
+         Compute d
+               │
+               ▼
+         Public Key (e,n)
+         Private Key (d,n)
+         
+         The key relationship is:
+         de ≡ 1 (mod φ(n))
+      * RSA Encryption
+         Message m
+               │
+               ▼
+         Modular Exponentiation
+         c = m^e mod n
+               │
+               ▼
+         Ciphertext
+      * RSA Decryption
+         Ciphertext
+               │
+               ▼
+         Modular Exponentiation
+         m = c^d mod n
+               │
+               ▼
+         Plaintext
+      * Hardware View of RSA
+         Message
+             │
+             ▼
+         Modular Multiplier
+             │
+             ▼
+         Modular Exponentiator
+             │
+             ▼
+         Large Registers
+             │
+             ▼
+         Ciphertext
+      * Square-and-Multiply Engine
+         Actual FPGA implementation:
+         Exponent Bit
+               │
+               ▼
+         Square
+               │
+               ▼
+         Multiply?
+               │
+               ▼
+         Modulo Reduction
+               │
+               ▼
+         Next Bit
+         
+         This repeats hundreds or thousands of times.
+   * ECC Internal Flow
+      * ECDH Key Exchange
+         Private Key A
+               │
+               ▼
+         A × G
+               │
+               ▼
+         Public Key A
+         
+         Private Key B
+               │
+               ▼
+         B × G
+               │
+               ▼
+         Public Key B
+         
+         Exchange:
+         A × PublicKeyB
+               │
+               ▼
+         Shared Secret
+         
+         B × PublicKeyA
+               │
+               ▼
+         Shared Secret
+         
+         Both sides obtain the same secret.
+   * SHA-256 Internal Flow
+      * SHA-256 Pipeline
+         Message
+               │
+               ▼
+         Padding
+               │
+               ▼
+         512-bit Blocks
+               │
+               ▼
+         Message Schedule
+               │
+               ▼
+         64 Compression Rounds
+               │
+               ▼
+         Hash State Update
+               │
+               ▼
+         256-bit Digest
+
+Topic 4 — Key Management & Infrastructure
+* Subtopic 4.1 — Key Lifecycle Management
+   * Core principle: algorithms are useless if the key is stolen
+   * Generation → (via pure randomness) → Storage → Distribution → Exchange → Rotation → Revocation → Destruction
+* Subtopic 4.2 — Public Key Infrastructure (PKI)
+   * Certificates, Certificate Authorities (CA), Certificate Chains, Trust Models
+* Subtopic 4.3 — Security Operations
+   * Access Control, Logging, Auditing, Compliance
+* Subtopic 4.4 — Disaster Recovery
+   * Shamir's Secret Sharing: split key into n parts; minimum k parts needed to reconstruct
+   * Threshold Cryptography, Key Backup, Recovery Procedures
+* Subtopic 4.5 — Random Number Generation
+   * Importance: All cryptography depends on randomness.
+   * PRNG: Deterministic, Fast
+   * TRNG: Physical Entropy Sources, Hardware Entropy Sources (Ring Oscillator TRNG, Thermal Noise, Jitter-Based Entropy)
+   * Standards: NIST DRBG
+
+Topic 5 — Post-Quantum Cryptography (PQC)
+* Subtopic 5.1 — Why PQC?
+   * Threat: Shor's Algorithm breaking RSA & ECC
+   * Large-scale quantum computers can break RSA and current encryption methods
+* Subtopic 5.2 — Mathematical Foundations
+   * Lattice-Based Cryptography: Learning With Errors (LWE), Module-LWE, Ring-LWE
+   * Code-Based Cryptography: Error Correcting Codes, HQC
+   * Other Families: Hash-Based, Multivariate, MPC-Based, Isogeny-Based
+* Subtopic 5.3 — Number Theoretic Transform (NTT)
+   * Polynomial multiplication
+   * FFT intuition
+   * NTT
+   * Inverse NTT
+* Subtopic 5.4 — NIST Standardized Algorithms
+   * FIPS 203: ML-KEM → Lattice-based Key Encapsulation
+      * PQC Hardware Flow (ML-KEM)
+         Input Polynomial
+                 │
+                 ▼
+         NTT Engine
+                 │
+                 ▼
+         Polynomial Multiply
+                 │
+                 ▼
+         Inverse NTT
+                 │
+                 ▼
+         Compression
+                 │
+                 ▼
+         Ciphertext
+         
+         (This is the modern FPGA accelerator architecture used for PQC)
+   * FIPS 204: ML-DSA → Lattice-based Digital Signatures
+      * PQC Hardware Flow (ML-DSA)
+         Message
+                 │
+                 ▼
+         Hash
+                 │
+                 ▼
+         Polynomial Sampling
+                 │
+                 ▼
+         NTT
+                 │
+                 ▼
+         Matrix Operations
+                 │
+                 ▼
+         Signature
+   * FIPS 205: SLH-DSA → Hash-based Digital Signatures
+* Subtopic 5.5 — Additional Standards
+   * FIPS 206: FN-DSA (Falcon) → Lattice-based, significantly smaller signatures; expected 2026
+   * HQC (Hamming Quasi-Cyclic): Standardized March 2024; Backup KEM (Code-Based)
+* Subtopic 5.6 — Signature Competition Candidates (NIST Round 3)
+   * Goal: smaller, faster digital signatures not based on lattice math
+   * Candidates: FAEST, MQOM, SDitH, MAYO, ONOVA
+* Subtopic 5.7 — Quantum Resistant Symmetric Security
+   * AES-256, SHA-384, SHA-512 (considered secure against quantum attacks)
+
+Topic 6 — FPGA Architecture & Verilog Implementation
+* Subtopic 6.1 — FPGA Fundamentals
+   * FPGAs = parallel computing for real-time processing; CPUs = sequential
+   * CLBs (Configurable Logic Blocks): contain LUTs + Flip-Flops (D-FF mainly used)
+   * Routing Fabric / Programmable Interconnects
+   * DSP Blocks, BRAM, I/O Blocks (external connections)
+* Subtopic 6.2 — Implementation Architectures
+   * Iterative Design, Fully Unrolled Design, Pipelined Design, BRAM-Based Design
+* Subtopic 6.3 — Verilog Programming
+   * Fundamentals: Modules, Ports, Wires, Registers
+   * Constructs: assign, always, if/else, case
+   * Design Styles: Structural Modeling, Dataflow Modeling, Behavioral Modeling
+   * Order rules: assign statements (order does NOT matter); initial/always blocks (order DOES matter)
+   * Simulation: Testbenches, ModelSim
+* Subtopic 6.4 — Cryptographic Hardware Design
+   * DES Hardware: Initial Permutation, Round Function, Key Schedule (64-bit block splitting)
+   * AES Hardware: SubBytes, ShiftRows, MixColumns, Key Expansion
+   * Hardware Metrics: Area, Throughput, Latency
+   * Why RSA Is Hard: Modular Exponentiation, Huge Integer Arithmetic, DSP Intensive
+* Subtopic 6.5 — Timing & Clock Domain Crossing (CDC)
+   * Timing Analysis:
+      * Setup Constraint (Max Frequency): $T_{clock} \geq T_{propagation\_delay} + T_{logic\_delay} + T_{setup}$
+      * Hold Constraint (Race Condition Check): $T_{propagation\_delay} + T_{logic\_delay} \geq T_{hold}$
+   * Concepts: Setup Violations, Hold Violations, Metastability (mainly at CDC, slow → fast)
+   * Solutions: Synchronizers, FIFOs, Handshaking
+* Subtopic 6.6 — FPGA Optimization
+   * Performance Metrics: Throughput, Latency, Fmax
+   * Resource Metrics: LUT Utilization, FF Utilization, DSP Utilization, BRAM Utilization, Power Consumption
+   * Optimization Methods: Pipelining, Loop Unrolling, Resource Sharing, Parallelism
+   * Tradeoffs: Area vs Speed, Power vs Performance
+* Subtopic 6.7 — Verification & Validation
+   * Verification Techniques: Functional Verification, Coverage Analysis
+   * Assertions: SystemVerilog Assertions (SVA)
+   * Advanced Methodologies: UVM (optional), Formal Verification
+   * Testbench Design: Directed Testing, Random Testing, Self-Checking Testbenches
+* Subtopic 6.8 — FPGA Design Flow
+   * Flow: RTL → Simulation → Synthesis → Place & Route → Timing Closure → Bitstream Generation → FPGA Programming
+   * Tools: Vivado, Quartus Prime, ModelSim
+* Subtopic 6.9 — Complete Crypto Accelerator Project
+   * Pipeline Flow:
+      AES Algorithm
+            ↓
+      RTL Design
+            ↓
+      Simulation
+            ↓
+      Synthesis
+            ↓
+      Timing Closure
+            ↓
+      FPGA Deployment
+            ↓
+      Performance Measurement
+
+Topic 7 — System-on-Chip (SoC) Integration & Bus Interfaces
+* Context: This is how you bridge the custom Verilog IPs built in Topic 6 to the CPU. The buses act as the highway to send plaintext to the crypto core and read the ciphertext back.
+* Subtopic 7.1 — SoC Fundamentals
+   * CPU, Memory, Peripherals, Hardware Accelerators
+* Subtopic 7.2 — AXI Protocol
+   * AXI4, AXI Lite, AXI Stream
+* Subtopic 7.3 — APB Protocol
+   * Peripheral Access, Low-Speed Devices
+* Subtopic 7.4 — Memory Architecture
+   * SRAM, DRAM, BRAM, Cache Memory
+* Subtopic 7.5 — Crypto Accelerator Integration
+   * Data Flow: CPU → AXI/APB → Crypto Core → Ciphertext Output
+   * Integration Topics: DMA, Interrupts, Memory Mapping, Driver Interaction
+
+Topic 8 — Hardware Security & Countermeasures
+* Subtopic 8.1 — Side Channel Attacks (SCA)
+   * Leakage Sources: Power, Timing, EM Radiation, Cache Access
+   * Detail: attacker reads current value drops and fractional millisecond timing differences → extracts key bit by bit
+   * Countermeasures: Constant-Time Execution, Hardware Noise Generators (Noise Injection), Randomization
+* Subtopic 8.2 — Fault Injection (FI) Attacks
+   * Methods: Voltage Glitching, Clock Glitching, Laser Injection, EM Fault Injection
+   * Example: glitch during if (password-is-correct) → instruction skipped → system unlocked
+   * Countermeasures: Code redundancy (Redundant Computation), Brownout Detectors, Error Detection
+* Subtopic 8.3 — Countermeasure Toolkit
+   * Masking: Hiding, splits secret into random fragments during calculation
+   * White-Box Cryptography: key mathematically blended into software; cannot be extracted
+   * Code Obfuscation: scrambles machine code; memory dump becomes unreadable
+   * RTL Security Analysis: scans hardware blueprints before manufacturing; finds open debug ports, etc.
+* Subtopic 8.4 — Hardware-Specific Defenses
+   * Node Locking / Device Binding: binds encryption to CPU serial number, MAC address, or CPU ID
+   * Secure Monotonic Clocks, Hardware Roots of Trust, Core lifting protection
+* Subtopic 8.5 — Crypto Agility
+   * Algorithm Updates, PQC Migration
+   * Relies on Modular Crypto Libraries + Reconfigurable Hardware accelerators (not hardcoded)
+   * Physical device adapts when cryptographic landscape changes
+* Subtopic 8.6 — Secure Boot
+   * Boot Chain: ROM → Signature Verification → Bootloader → Operating System
+   * Components: Root of Trust, Firmware Signing, Secure Updates
+
+Final Outcome
+
+After completing all 8 topics:
+Digital Logic
+    ↓
+Cryptography
+    ↓
+Key Management
+    ↓
+Post-Quantum Cryptography
+    ↓
+FPGA Design
+    ↓
+SoC Integration
+    ↓
+Hardware Security
+
+This sequence is very close to what a graduate student or junior engineer would follow when specializing in Cryptographic Hardware Engineering, FPGA Security, Embedded Security, Hardware Accelerators, and Post-Quantum Cryptography Hardware Design.
