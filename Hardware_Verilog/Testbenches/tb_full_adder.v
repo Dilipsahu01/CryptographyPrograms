@@ -1,8 +1,5 @@
 `timescale 1ns / 1ps
 
-// =====================================================================
-// Comprehensive Testbench for Full Adder Implementations
-// =====================================================================
 // This testbench verifies all four full adder modeling methodologies:
 // 1. Structural Gate-Level (Primitive Gates)
 // 2. Dataflow (assign keyword)
@@ -12,7 +9,7 @@
 // It applies exhaustive stimulus (all 8 binary combinations of a, b, cin)
 // and displays the results of each module side-by-side to ensure
 // they are mathematically and logically identical.
-// =====================================================================
+
 
 module tb_full_adder;
 
@@ -27,9 +24,7 @@ module tb_full_adder;
     wire sum_ifelse, cout_ifelse;
     wire sum_case, cout_case;
 
-    // ---------------------------------------------------------
     // Instantiate all 4 Design Under Test (DUT) variations
-    // ---------------------------------------------------------
     
     // Module 1: Gate-Level Full Adder
     full_adder_gates dut1_gates (
@@ -55,9 +50,7 @@ module tb_full_adder;
         .sum(sum_case), .cout(cout_case)
     );
 
-    // ---------------------------------------------------------
     // Stimulus Generation Block
-    // ---------------------------------------------------------
     initial begin
         // Display header formatting for the terminal output
         $display("\n===================================================================================");
