@@ -2,17 +2,21 @@ import subprocess
 import os
 
 tests = [
-    {"cmd": ["python3", "aespy.py"], "name": "AES (Python)", "expected": "Ciphertext: 69c4e0d86a7b0430d8cdb78070b4c55a"},
-    {"cmd": ["python3", "despy.py"], "name": "DES (Python)", "expected": "Ciphertext: 0x85E813540F0AB405"},
-    {"cmd": ["python3", "rsapy.py"], "name": "RSA (Python)", "expected": "Decrypted : Hello RSA From Scratch"},
-    {"cmd": ["./aesc"], "name": "AES (C)", "expected": "Ciphertext: 69 c4 e0 d8 6a 7b 04 30 d8 cd b7 80 70 b4 c5 5a"},
-    {"cmd": ["./desc"], "name": "DES (C)", "expected": "Ciphertext: 0x85E813540F0AB405"},
-    {"cmd": ["./rsac"], "name": "RSA (C)", "expected": "Decrypted: RSA"},
+    {"cmd": ["python3", "CryptoAlgorithms/Python_Implementation/aespy.py"], "name": "AES (Python)", "expected": "Ciphertext: 69c4e0d86a7b0430d8cdb78070b4c55a"},
+    {"cmd": ["python3", "CryptoAlgorithms/Python_Implementation/despy.py"], "name": "DES (Python)", "expected": "Ciphertext: 0x85E813540F0AB405"},
+    {"cmd": ["python3", "CryptoAlgorithms/Python_Implementation/rsapy.py"], "name": "RSA (Python)", "expected": "Decrypted : Hello RSA From Scratch"},
+    {"cmd": ["./CryptoAlgorithms/C_Implementation/aesc"], "name": "AES (C)", "expected": "Ciphertext: 69 c4 e0 d8 6a 7b 04 30 d8 cd b7 80 70 b4 c5 5a"},
+    {"cmd": ["./CryptoAlgorithms/C_Implementation/desc"], "name": "DES (C)", "expected": "Ciphertext: 0x85E813540F0AB405"},
+    {"cmd": ["./CryptoAlgorithms/C_Implementation/rsac"], "name": "RSA (C)", "expected": "Decrypted: RSA"},
 ]
 
 def compile_c_files():
     print("--- Compiling C files ---")
-    c_files = [("aesc.c", "aesc"), ("desc.c", "desc"), ("rsac.c", "rsac")]
+    c_files = [
+        ("CryptoAlgorithms/C_Implementation/aesc.c", "CryptoAlgorithms/C_Implementation/aesc"),
+        ("CryptoAlgorithms/C_Implementation/desc.c", "CryptoAlgorithms/C_Implementation/desc"),
+        ("CryptoAlgorithms/C_Implementation/rsac.c", "CryptoAlgorithms/C_Implementation/rsac")
+    ]
     for src, out in c_files:
         try:
             subprocess.run(["gcc", "-o", out, src], check=True)
