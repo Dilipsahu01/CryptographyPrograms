@@ -1,17 +1,12 @@
 `timescale 1ns / 1ps
 
-// =====================================================================
-// Cryptographic Hardware Integration Testbench
-// =====================================================================
 // This simulation verifies the modern SoC components:
 // 1. The AXI4-Stream AES S-Box (Handshaking, Latency, Data Validity)
 // 2. The Hardware DES P-Box (Combinational bit-transposition)
 
 module tb_crypto;
 
-    // ---------------------------------------------------------
     // Signal Declarations
-    // ---------------------------------------------------------
     
     // Global Clock and Reset Generation
     reg clk;
@@ -30,9 +25,7 @@ module tb_crypto;
     reg  [31:0] pbox_in;
     wire [31:0] pbox_out;
 
-    // ---------------------------------------------------------
     // Hardware Instantiations
-    // ---------------------------------------------------------
 
     // Instantiate AES S-Box (Sequential pipeline with AXI handshake)
     aes_sbox_hw dut_aes (
@@ -52,9 +45,8 @@ module tb_crypto;
         .data_out(pbox_out)
     );
 
-    // ---------------------------------------------------------
+
     // Simulation Logic
-    // ---------------------------------------------------------
 
     // 100MHz System Clock Generation (10ns period)
     initial begin
@@ -78,17 +70,14 @@ module tb_crypto;
         // Emulate power-on reset
         #20 rst_n = 1;
         
-        // ----------------------------------------------------
         // TEST 1: DES P-BOX Combinational Permutation
-        // ----------------------------------------------------
         #10;
         $display("\n[DES P-Box Structural Routing Test]");
         $display("Data flowing into Silicon Routing : 0x%h", pbox_in);
         $display("Data out from Silicon Routing   : 0x%h", pbox_out);
         
-        // ----------------------------------------------------
         // TEST 2: AES S-BOX AXI4-Stream Handshake Verification
-        // ----------------------------------------------------
+
         $display("\n[AES S-Box AXI4-Stream Handshake Test]");
         
         // Push a byte onto the AXI Stream
