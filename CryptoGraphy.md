@@ -3,44 +3,66 @@
 ### **1.1 — Digital Logic Fundamentals**
 
 **Boolean Algebra:** The mathematical foundation of digital circuits. It uses binary values (0s and 1s) and logical operations (AND, OR, NOT) to evaluate expressions and make hardware-level decisions.  
+
 **Logic Gates**: The physical silicon building blocks that execute Boolean algebra. For example, an AND gate outputs 1 only if all its inputs are 1\. The XOR (exclusive OR) gate is exceptionally important in cryptography for scrambling bits.  
+
 **Combinational vs Sequential Logic:** Combinational logic evaluates its output purely based on its current inputs (like a basic calculator). Sequential logic has "memory"; its output depends on current inputs and past states (like a digital clock).  
+
 **Karnaugh Maps (K-Maps)**: A visual grid used by engineers to simplify complex Boolean expressions. Simplified expressions require fewer physical logic gates, saving expensive chip area.  
+
 **Multiplexers (Mux) & Decoders**: A Mux acts as a digital switch, selecting one of many input signals and routing it to a single output. A decoder takes a compressed binary input and activates one specific output line.
 
 ### **1.2 — Sequential Logic**
 
+
 **Latches & Flip-Flops:** The fundamental memory elements in hardware. A flip-flop (like the widely used D-Type) stores a single bit of data (0 or 1\) and only updates its stored value precisely when the system clock ticks.  
+
 **Registers:** A collection of multiple flip-flops grouped together to store larger data types, such as a 32-bit or 64-bit integer.  
+
 **Counters:** Specialized registers wired to automatically increment or decrement their value on every clock cycle.  
+
 **Shift Registers:** Registers that move (shift) their stored bits to the left or right. These are heavily used in cryptographic algorithms like AES for byte-shifting and in DES for key generation.
+
 
 ### **1.3 — Finite State Machines (FSM)**
 
+
 **Finite State Machines:** A conceptual model used to design complex sequential logic. An FSM exists in one specific "state" at a time and transitions between different states based on inputs.  
+
 **Moore vs Mealy Machines:** In a Moore machine, the FSM's output depends purely on its current state. In a Mealy machine, the output is faster because it depends on both the current state and the current inputs.  
+
 **State Encoding & RTL Implementation:** The engineering process of assigning binary codes to each state and writing the actual Verilog (RTL) code to physically build the FSM in hardware.
 
 ### **1.4 — Pipelining Concepts**
 
 **Pipeline Stages:** Breaking a massive mathematical operation into smaller, bite-sized chunks (stages) separated by registers. Like a car assembly line, multiple pieces of data can be processed simultaneously at different stages.  
+
 **Throughput vs Latency:** Latency is the total time it takes for one specific piece of data to travel from start to finish. Throughput is how much total data the system pumps out per second. Pipelining heavily increases throughput.  
+
 **Pipeline Hazards**: Issues that disrupt the smooth flow of the pipeline, such as waiting on the result of a previous calculation (data dependency).  
+
 **Deep vs Shallow Pipelines:** Deep pipelines have many very short stages, allowing for extremely high clock speeds. Shallow pipelines have fewer, longer stages.
 
 ### **1.5 — VLSI Design Concepts**
 
 **ASIC vs FPGA:** An ASIC (Application-Specific Integrated Circuit) is a permanent, custom-made chip designed for one exact purpose (mass production, highly power efficient). An FPGA (Field-Programmable Gate Array) is a "blank slate" chip that can be reprogrammed infinitely (great for prototyping).  
+
 **Standard Cell Design:** Building a chip by snapping together pre-designed, heavily tested logic gates provided by a silicon foundry (like TSMC).  
+
 **RTL Design Flow:** The end-to-end engineering pipeline: writing Verilog code → simulating it → synthesizing it into a web of gates → physically laying out the tiny wires on the silicon chip.  
-A**rea, Power, Performance Tradeoffs**: The golden triangle of hardware engineering. If you want a faster chip (Performance), you will inevitably consume more electricity (Power) and use more physical silicon real estate (Area).
+
+**Area, Power, Performance Tradeoffs**: The golden triangle of hardware engineering. If you want a faster chip (Performance), you will inevitably consume more electricity (Power) and use more physical silicon real estate (Area).
 
 ### **1.6 — Timing Fundamentals**
 
 **Clocking:** The beating heart of the chip. A clock signal is a square wave that coordinates exactly when all flip-flops should capture new data.  
+
 **Setup Time:** The required time that input data must remain stable before the clock ticks. If data arrives late, the chip fails (Setup Violation).  
+
 **Hold Time:** The required time that input data must remain stable after the clock ticks.  
+
 **Propagation Delay**: The physical time it takes for electricity to travel through logic gates and wires.  
+
 **Critical Path Analysis:** Identifying the single longest, slowest path of logic in the entire chip. This specific path strictly limits the maximum clock frequency (speed) of your design.
 
 ## **2 — Cryptography Fundamentals & Security Architecture**
@@ -48,17 +70,25 @@ A**rea, Power, Performance Tradeoffs**: The golden triangle of hardware engineer
 ### **2.1 — Definition & Core Objectives**
 
 **Definition:** The mathematical process of converting readable information (Plaintext) into secure gibberish (Ciphertext) using Encryption, and turning it back using Decryption.  
+
 **Security Goals:**  
+
 **Confidentiality:** Ensuring unauthorized attackers cannot read the data.  
+
 **Integrity:** Ensuring the data hasn't been maliciously tampered with or corrupted while traveling over the internet.  
+
 **Authentication:** Mathematically proving that the sender or receiver is exactly who they claim to be.  
+
 **Non-Repudiation:** Ensuring a sender cannot deny that they sent a specific message or authorized a transaction.  
+
 **Availability:** Ensuring the system remains operational and defends against sabotage (like DDoS attacks).
 
 ### **2.2 — Software vs Hardware Cryptography**
 
 **Software Cryptography:** Running cryptographic math on a standard CPU. It is highly flexible and easy to update, but extremely slow and burns a lot of battery life, making it inefficient for massive data loads.  
+
 **Hardware Cryptography:** Designing dedicated silicon (a Crypto Accelerator) inside an FPGA or ASIC explicitly hardwired to do cryptographic math. This provides incredibly low latency, high throughput, and lower power consumption.  
+
 **Hardware Acceleration Examples:** Just as a CPU offloads 3D graphics rendering to a GPU, or AI matrix math to a TPU/NPU, it offloads encryption math to a Hardware Crypto Accelerator.
 
 ### **2.3 — Security Services Mapping**
@@ -74,34 +104,48 @@ Availability is solved by hardware and system Redundancy & Recovery.
 ### **3.1 — Symmetric Cryptography**
 
 **Core Concepts:** Uses the exact same secret key to both encrypt and decrypt data. It is blazing fast and extremely easy to implement efficiently in hardware logic gates.  
+
 **Core Challenge**: You must somehow securely share the secret key with the receiver over a public, unsecured internet before you can start communicating.  
+
 **Algorithms:** DES and 3DES are older, legacy standards. AES (Advanced Encryption Standard) is the modern gold standard.  
-**Modes of Operation:** Since AES only encrypts 128 bits at a time, we use modes like CBC, CTR, or GCM to securely chain multiple blocks together to encrypt large files. GCM is highly preferred because it also provides integrity checking.  
+
+**Modes of Operation:** Since AES only encrypts 128 bits at a time, we use modes like CBC, CTR, or GCM to 
+securely chain multiple blocks together to encrypt large files. GCM is highly preferred because it also provides integrity checking.  
+
 **Quantum Readiness:** A quantum computer running Grover's algorithm halves the effective security of symmetric keys. Therefore, AES-256 (which acts like 128-bit against quantum attacks) is considered totally secure against future quantum computers.
 
 ### **3.2 — Asymmetric Cryptography**
 
 **Concepts:** Uses two mathematically linked keys. A Public Key that you share with the world, and a Private Key that you guard with your life.  
+
 **Confidentiality Rule**: If someone encrypts a message using your Public Key, it can ONLY be unlocked and read using your specific Private Key.  
+
 **Key Nuance**: If you encrypt a message using your Private Key, absolutely anyone can decrypt it using your Public Key. This doesn't provide confidentiality, but it proves you were the one who sent it (which is the basis of Digital Signatures).  
+
 **Algorithms:** RSA, Diffie-Hellman, and Elliptic Curve Cryptography (ECC).
 
 ### **3.3 — Elliptic Curve Cryptography (ECC)**
 
 **Mathematical Foundation:** Instead of using giant prime numbers like RSA, ECC relies on the algebraic structure of points on an elliptic curve over a finite field. Security relies on the difficulty of the Elliptic Curve Discrete Logarithm Problem (ECDLP).  
+
 **Why ECC?**: It offers the exact same level of security as RSA but with drastically smaller keys. For example, a tiny 256-bit ECC key is just as secure as a massive 3072-bit RSA key. This results in faster math, smaller memory footprints, and lower power consumption for IoT devices.  
+
 **Protocols & Curves**: Used for key exchanges (ECDH) and signatures (ECDSA). Popular modern curves include Curve25519 and NIST P-256.
 
 ### **3.4 — Modular Arithmetic Fundamentals**
 
 **Modulo Operation**: The math of remainders (like a clock wrapping around after 12). If you do 14 mod 12, the answer is 2\. It creates finite fields where numbers never grow infinitely large, keeping hardware registers from overflowing.  
+
 **Operations**: Modular addition, subtraction, and multiplication are straightforward, wrapping around the modulus.  
+
 **Modular Inverse:** The cryptography equivalent of division. You find a number that, when multiplied by your original number, yields a remainder of 1\.  
+
 **Fast Exponentiation**: Doing math like c \= m^e mod n sequentially takes forever. Hardware uses "Square-and-Multiply" logic blocks to do this in logarithmic time, which is the only reason RSA is fast enough to be usable.
 
 ### **3.5 — RSA Algorithm (Full Math)**
 
 **Mathematical Foundation:** Relies purely on Number Theory, specifically the extreme computational difficulty of factoring the product of two massive prime numbers back into its origins.  
+
 **Key Generation:**  
    1\. Choose two gigantic random primes: p and q.  
    2\. Compute the Modulus: n \= p × q.  
@@ -113,22 +157,31 @@ Usage: The public key is (e, n) and the private key is (d, n).
 ### **3.6 — Hash Functions & Message Authentication**
 
 **Cryptographic Hashing**: Taking an input of any size (like a 4GB movie) and mathematically crushing it down into a fixed-size string of characters (like a 256-bit hash).  
+
 **Properties:**  
+
 **Deterministic:** The same exact file always produces the exact same hash.  
+
 **Avalanche Effect:** Changing even a single pixel in a 4GB movie completely changes the entire resulting hash.  
+
 **Collision Resistance:** It should be computationally impossible to find two different files that accidentally produce the exact same hash.  
+
 **Message Authentication (HMAC):** A standard hash proves a file wasn't corrupted. An HMAC mathematically blends a secret password into the hash, proving the file wasn't corrupted AND that it definitely came from someone holding the secret password.
 
 ### **3.7 — Digital Signatures**
 
 **Workflow**: You don't sign a 4GB file (that requires too much math). You Hash the 4GB file down to 256 bits, and then encrypt that tiny hash using your Private Key. That encrypted hash is your Digital Signature.  
+
 **Verification:** The receiver decrypts your signature using your Public Key to reveal the original hash. They then hash the 4GB file themselves. If both hashes match exactly, the signature is 100% mathematically valid.  
+
 **Applications**: This is exactly how Secure Boot verifies that an OS update actually came from Apple/Microsoft and wasn't tampered with by a hacker.
 
 ### **3.8 — Data States**
 
 **Data at Rest:** Data sitting idle on a hard drive or flash memory. Defended by full disk encryption.  
+
 **Data in Transit:** Data flying through ethernet cables or WiFi waves. Defended by TLS (HTTPS) and VPN tunnels.  
+
 **Data in Use**: Data actively being processed inside the CPU registers or RAM. This is the hardest to defend and requires advanced secure enclaves or memory encryption hardware.
 
 ### **3.9 — Modern Security Architecture**
@@ -138,29 +191,44 @@ Usage: The public key is (e, n) and the private key is (d, n).
 ### **3.10 — Key Exchange Protocols**
 
 **Diffie-Hellman Concept:** A mathematical magic trick that allows Alice and Bob to shout numbers at each other across a crowded, wiretapped room, and both mathematically arrive at the exact same secret number, while the wiretapper learns absolutely nothing useful.  
+
 **The Flow:** Both agree on public base numbers (g and p). Alice mixes in her secret a to create public A. Bob mixes in his secret b to create public B. They trade A and B publicly. Alice mixes her secret a into B. Bob mixes his secret b into A. Due to the laws of exponents and modular math, both independently arrive at the same shared secret.
 
 ### **3.11 — Algorithm Internal Dataflow**
 
 **Visualizing the Silicon:** Cryptography isn't just software code; it maps directly to physical hardware wires, registers, and logic gates. Hardware engineers design physical Verilog pipelines to pump data through these obstacle courses at gigabits per second.  
+
 **DES Dataflows:**  
+
  **Pipeline:** \`64-bit Plaintext → Initial Permutation (IP) → Split (L0|R0) → 16 Feistel Rounds → Swap Halves → Final Permutation (FP) → 64-bit Ciphertext\`  
+
 **Round Function:** \`32-bit Right Half → Expansion (32→48 bits) → XOR Round Key → S-Boxes (48→32 bits) → Permutation P → Output\`  
+
 **Key Schedule**: \`56-bit Key → PC-1 → Left Shift → PC-2 → Round Key\`  
    [https://github.com/Dilipsahu01/CryptographyPrograms](https://github.com/Dilipsahu01/CryptographyPrograms)
 
 * **AES Dataflows:**  
+
   **Pipeline**: \`128-bit Plaintext → AddRoundKey → 9 Standard Rounds (SubBytes, ShiftRows, MixColumns, AddRoundKey) → Final Round (No MixColumns) → Ciphertext\`  
+
   **Key Expansion**: \`Master Key → RotWord → SubWord → Rcon → Round Keys\`  
      [https://github.com/Dilipsahu01/CryptographyPrograms](https://github.com/Dilipsahu01/CryptographyPrograms)  
+
 * **RSA Dataflows:**  
+
   **Key Generation:** Choose p,q → n \= p × q → φ(n) → Choose e → Compute d → Public Key (e,n) & Private Key (d,n)  
+
    **Encryption/Decryption**: \`Message → Modular Exponentiation Engine → Ciphertext\`  
   [https://github.com/Dilipsahu01/CryptographyPrograms](https://github.com/Dilipsahu01/CryptographyPrograms)  
+
   **Hardware Square & Multiply Engine:** \`Exponent Bit → Square → Multiply? → Modulo Reduction → Next Bit\`  
+
 * **ECC (ECDH) Dataflow:**  
+
    **Exchange:** Alice computes Public A (a × G) → Bob computes Public B (b × G) → Exchange Public Keys → Both compute Shared Secret (a × B \= b × A)  
+
 * **SHA-256 Dataflow:**  
+
   **Pipeline:** \`Message → Padding → 512-bit Blocks → Message Schedule → 64 Compression Rounds → Hash State Update → 256-bit Digest\`
 
 ## **4 — Key Management & Infrastructure**
@@ -169,22 +237,31 @@ Usage: The public key is (e, n) and the private key is (d, n).
 
 Core Principle: It does not matter if you use mathematically unbreakable military-grade AES-256 encryption if an attacker can simply steal your key. Key management is often the weakest link in real-world security.  
 The Lifecycle Flow:  
+
    **1\. Generation:** Keys must be created using true, unpredictable randomness.  
+
    **2\. Storage:** Keys must be kept in highly secure environments, like Hardware Security Modules (HSMs) or secure enclaves, never hardcoded in plaintext software.  
+   
    **3\. Distribution & Exchange:** Securely transporting the key to the intended user (often using Asymmetric Crypto like RSA or ECDH).  
+   
    **4\. Rotation:** Regularly replacing old keys with new ones to limit the damage if a key is ever compromised.  
+   
    **5\. Revocation & Destruction:** Permanently wiping a key from existence when an employee leaves or a device is compromised, ensuring it can never be used to decrypt past data.
 
 ### **4.2 — Public Key Infrastructure (PKI)**
 
 **Certificates:** A digital passport. It mathematically binds a Public Key to a specific entity (like google.com), ensuring you aren't accidentally encrypting your bank password using a hacker's public key.  
+
 **Certificate Authorities (CA):** Highly trusted third-party organizations (like DigiCert or Let's Encrypt) that cryptographically sign and issue these certificates.  
+
 **Certificate Chains & Trust Models:** Your browser inherently trusts a root CA. The root CA signs an intermediate CA, which signs google.com's certificate. Because of the math of Digital Signatures, trust flows down the chain.
 
 ### **4.3 — Security Operations**
 
 **Access Control:** Strictly defining who (or what hardware process) has permission to ask the crypto chip to perform a decryption or signing operation.  
+
 **Logging & Auditing:** Keeping an immutable, tamper-evident record of exactly when a key was used and by whom. If a breach happens, these logs are critical for forensic investigations.  
+
 **Compliance:** Ensuring the key management systems meet strict government or industry standards (like FIPS 140-2 or PCI-DSS for credit cards).
 
 ### **4.4 — Disaster Recovery**
@@ -220,6 +297,7 @@ The Lifecycle Flow:
 ### **5.2 — Mathematical Foundations**
 
 **Lattice-Based Cryptography:** The most dominant PQC family. It relies on finding the shortest vector in a massive, multi-dimensional grid (a lattice). This is easy to do in 2D, but computationally impossible in 10,000 dimensions, even for a quantum computer. Key concepts include Learning With Errors (LWE) and Ring-LWE.  
+
 **Code-Based Cryptography:** Based on Error Correcting Codes (how CDs and hard drives fix corrupted bits). To crack it, an attacker must decode a random linear code, which is mathematically proven to be extremely hard.
 
 **Other Families:** Hash-based (SPHINCS+), Multivariate (solving massive systems of polynomial equations), and Isogeny-based (walking paths between elliptic curves).
@@ -273,9 +351,11 @@ Check out the [Source Code](https://github.com/Dilipsahu01/CryptographyPrograms)
 ### **6.1 — FPGA Fundamentals**
 
 **The CPU vs FPGA Paradigm:** A CPU executes one software instruction at a time (sequential processing). An FPGA executes millions of electrical signals at the exact same time (massive parallel processing).  
+
 **CLBs (Configurable Logic Blocks):** The tiny lego bricks of an FPGA. They contain LUTs (Look-Up Tables) to simulate any Boolean logic gate (AND/OR/XOR), and Flip-Flops to store the result.
 
 **Specialized Blocks:**  
+
 **DSP Slices (Digital Signal Processors):** Hardwired multiplier circuits. Crucial for the heavy math in RSA, ECC, and PQC NTT engines.
 
 **BRAM (Block RAM):** Ultra-fast memory chunks located directly next to the logic. Used to store things like AES S-Boxes or massive cryptographic keys.
@@ -295,8 +375,11 @@ Check out the [Source Code](https://github.com/Dilipsahu01/CryptographyPrograms)
 **Modules & Ports:** The hardware equivalent of software functions. Modules have inputs and outputs (Wires) and internal memory (Registers).
 
 **Design Styles:**  
+
 **Structural:** Manually wiring up individual AND/OR gates (extremely tedious).  
+
 **Dataflow:** Describing the flow of data using math equations (e.g., \`assign ciphertext \= plaintext ^ key;\`).
+
 
  **Behavioral:** Using \`if/else\` and \`case\` statements inside clock-triggered \`always\` blocks to describe complex state machines and FSMs.
 
@@ -304,14 +387,18 @@ Check out the [Source Code](https://github.com/Dilipsahu01/CryptographyPrograms)
 
 ### **6.4 — Cryptographic Hardware Design**
 
+
 **Mapping Math to Silicon:**  
+
  **AES Hardware:** \`SubBytes\` becomes a massive Look-Up Table (ROM/BRAM). \`ShiftRows\` uses literally zero logic gates; it's just physically criss-crossing the copper wires on the chip. \`MixColumns\` becomes a dense web of XOR gates.
 
  **Why RSA is Hard in Hardware**: RSA requires massive 3072-bit integer multiplication. An FPGA cannot do this in one cycle. It requires feeding data through small DSP blocks thousands of times, consuming heavy power, time, and area.
 
 ### **6.5 — Timing & Clock Domain Crossing (CDC)**
 
+
 **Setup & Hold Constraints:**  
+
 **Setup Time (Max Frequency):** T\_clock ≥ T\_propagation\_delay \+ T\_logic\_delay \+ T\_setup. If you put too many logic gates between two registers, electricity cannot physically travel through them fast enough before the next clock tick. You must either slow down the clock, or add pipeline stages.
 
 **Hold Time (Race Condition):** T\_propagation\_delay \+ T\_logic\_delay ≥ T\_hold. If data travels too fast and overwrites the next register before it was ready to capture, the circuit fails entirely regardless of how slow your clock speed is.
@@ -321,8 +408,11 @@ Check out the [Source Code](https://github.com/Dilipsahu01/CryptographyPrograms)
 ### **6.6 — FPGA Optimization**
 
 **Performance Metrics:**  
+
    \* Throughput: Gigabits encrypted per second.  
+
    \* Latency: Total clock cycles required to encrypt one block from start to finish.  
+
    \* Fmax: The absolute maximum megahertz the clock can safely run at without causing   
 Setup Violations.
 
@@ -337,6 +427,7 @@ about LUT Utilization, Flip-Flop (FF) Utilization, DSP count, BRAM usage, and to
 SystemVerilog Assertions (SVA): Writing strict mathematical rules that the hardware must obey during simulation (e.g., \`assert (ciphertext \!= plaintext)\`).
 
 **Advanced Methodologies:**  
+ 
  **UVM (Universal Verification Methodology):** An industry-standard, heavy-duty object-oriented framework for hammering hardware designs with randomized corner-case testing.
 
  **Formal Verification**: Using pure mathematics to mathematically prove a design has no bugs under any circumstance, rather than relying on randomized testing.
@@ -344,11 +435,17 @@ SystemVerilog Assertions (SVA): Writing strict mathematical rules that the hardw
 ### **6.8 — FPGA Design Flow**
 
 **From Code to Silicon:**  
+ 
    1\. RTL: Write the Verilog code.  
+ 
    2\. Simulation: Run Testbenches in ModelSim to prove the mathematical logic is correct.  
+ 
    3\. Synthesis: A tool (like Vivado) converts Verilog text into a generic blueprint of logic gates.  
+ 
    4\. Place & Route: The tool maps those generic gates onto the physical silicon real estate of the specific FPGA chip and wires them together.  
+   
    5\. Timing Closure: The tool checks the physics of the chip to ensure electricity can travel through all wires before the clock ticks.  
+   
    6\. Bitstream: A binary file is generated and flashed onto the physical FPGA chip.
 
 ### **6.9 — Complete Crypto Accelerator** 
@@ -364,6 +461,7 @@ SystemVerilog Assertions (SVA): Writing strict mathematical rules that the hardw
 ### **7.1 — SoC Fundamentals**
 
 **The SoC (System-on-Chip):** Instead of having a separate CPU chip, RAM chip, and Crypto chip on a motherboard, an SoC puts the ARM CPU, memory controllers, and your custom hardware accelerators all onto one single piece of silicon (like Apple's M-series chips).  
+
 **The Master-Slave Relationship:** The CPU (Master) runs the OS and software. When it needs to encrypt a file, it sends a command over a bus to the Crypto Accelerator (Slave). The accelerator does the heavy math and alerts the CPU when the ciphertext is ready.
 
 ### **7.2 — AXI Protocol**
@@ -409,6 +507,7 @@ SystemVerilog Assertions (SVA): Writing strict mathematical rules that the hardw
 **Data Transfer Techniques:** Methods for moving data via Programmed I/O, utilizing synchronous (clock-driven) or asynchronous (handshake-driven) signals.
 
 **Interrupt Handling:** A mechanism allowing peripherals to signal the CPU to pause execution, handle an event, and return to the main task using RTI.  
+
 **Direct Memory Access (DMA) Controllers:** Specialized hardware that offloads bulk data transfers between I/O devices and memory, bypassing the CPU to save cycles.
 
 **DMA Transfer Modes:** Distinguishes between "Cycle Stealing" (transferring one word at a time between instructions) and "Block Transfer" (bursting large chunks of data).
@@ -436,6 +535,7 @@ SystemVerilog Assertions (SVA): Writing strict mathematical rules that the hardw
 **Memory Mapping**: The crypto core is assigned a specific physical address in the CPU's memory map (e.g., \`0x4000\_0000\`). When the software code writes data to that specific memory address, it physically routes over the AXI bus directly into the hardware accelerator's registers.
 
 **DMA (Direct Memory Access):** Forcing the CPU to copy a 4GB movie byte-by-byte into the crypto core is a massive waste of CPU time. Instead, the CPU tells a DMA engine: "Take this 4GB file from RAM, stream it into the Crypto Accelerator via AXI Stream, and put the ciphertext back into RAM." The CPU can then go to sleep or do other tasks while the hardware handles everything.  
+
 **Interrupts:** Once the DMA and Crypto Core are finished encrypting the 4GB file, they trigger a hardware hardware line. This physically jolts the CPU to say, "Wake up, the ciphertext is ready\!"
 
 **Driver Interaction:** The low-level C code (Linux Kernel Driver) that the software engineers write to interact with this memory-mapped hardware. It handles setting the AXI Lite registers, configuring the DMA, and responding to the interrupts.
@@ -463,6 +563,7 @@ SystemVerilog Assertions (SVA): Writing strict mathematical rules that the hardw
 ### **8.3 — Countermeasure Toolkit**
 
 **Masking:** Splitting the secret key into random mathematical fragments while calculating, so if power leaks, it only leaks random garbage.  
+
 **White-Box Cryptography:** Mathematically blending the key into the software code so thoroughly that even if a hacker has full read-access to the RAM, they cannot extract the key.
 
 **RTL Security Analysis:** Running software tools over the Verilog blueprints before manufacturing to ensure engineers didn't accidentally leave hidden debug ports (like JTAG) open.
